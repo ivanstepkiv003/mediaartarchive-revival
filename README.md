@@ -10,7 +10,11 @@ The Ukrainian Media Art Archive—originally created and maintained by Yanina Pr
 src/
   client/   React + TypeScript frontend
   api/      Reserved for the future .NET API
+docs/       Architecture, data model, decisions, and backlog
 ```
+
+Project documentation starts at [`docs/README.md`](docs/README.md). The ordered
+implementation backlog is maintained in [`docs/backlog/README.md`](docs/backlog/README.md).
 
 ## Run the frontend
 
