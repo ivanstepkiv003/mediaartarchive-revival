@@ -1,0 +1,11 @@
+.git
+.gitignore
+.aspire
+.vs
+**/bin
+**/obj
+**/node_modules
+**/dist
+**/TestResults
+*.user
+*.log

@@ -1,6 +1,6 @@
 # ADR 0001: Primary database
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-09-18
 
 ## Context
@@ -15,7 +15,7 @@ assets, publications contain articles, and several content types share tags and
 contributors. Referential integrity and predictable joins are important for an
 archive.
 
-## Proposed decision
+## Decision
 
 Use PostgreSQL as the primary database, accessed by the .NET API through Entity
 Framework Core.

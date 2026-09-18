@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/api/MediaArtArchive.Api.csproj" />
+    <Project Path="src/MediaArtArchive.AppHost/MediaArtArchive.AppHost.csproj" />
+    <Project Path="src/MediaArtArchive.ServiceDefaults/MediaArtArchive.ServiceDefaults.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/MediaArtArchive.Api.IntegrationTests/MediaArtArchive.Api.IntegrationTests.csproj" />
+    <Project Path="tests/MediaArtArchive.Api.UnitTests/MediaArtArchive.Api.UnitTests.csproj" />
+  </Folder>
+</Solution>

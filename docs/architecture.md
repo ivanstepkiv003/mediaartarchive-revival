@@ -15,12 +15,18 @@ React client
     |
     | HTTPS / JSON
     v
-ASP.NET Core API
+ASP.NET Core API container
     |
     | application services and persistence
     v
-PostgreSQL
+PostgreSQL container + persistent volume
 ```
+
+.NET Aspire defines and runs the local distributed application. The AppHost
+runs on the developer machine and starts both the API image and PostgreSQL in
+Docker, injects the database connection, enforces startup ordering, and exposes
+the Aspire dashboard. This keeps credentials out of source control and makes
+the complete backend reproducible from one command.
 
 Binary media should not be stored directly in the primary database. Images,
 video, audio, and documents should live in object storage; the database should

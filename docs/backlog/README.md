@@ -5,7 +5,7 @@ a working state and include tests and documentation for its public contract.
 
 | Order | Work item | Depends on | Status |
 | ---: | --- | --- | --- |
-| 1 | [API foundation](001-api-foundation.md) | — | Planned |
+| 1 | [API foundation](001-api-foundation.md) | — | Implemented; live Docker verification pending |
 | 2 | [Artist entity and endpoints](002-artist.md) | 1 | Planned |
 | 3 | [Work entity and endpoints](003-work.md) | 1, 2 | Planned |
 | 4 | [Publication entity and endpoints](004-publication.md) | 1 | Planned |

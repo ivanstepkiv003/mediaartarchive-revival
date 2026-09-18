@@ -1,5 +1,7 @@
 # 001: API foundation
 
+Status: Implemented; live Docker verification pending
+
 ## Goal
 
 Create the .NET API and its persistence foundation so domain features can be

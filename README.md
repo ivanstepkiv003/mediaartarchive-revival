@@ -9,12 +9,28 @@ The Ukrainian Media Art Archive—originally created and maintained by Yanina Pr
 ```text
 src/
   client/   React + TypeScript frontend
-  api/      Reserved for the future .NET API
+  api/      ASP.NET Core API
+  MediaArtArchive.AppHost/          Aspire orchestrator
+  MediaArtArchive.ServiceDefaults/  Shared health and telemetry defaults
 docs/       Architecture, data model, decisions, and backlog
+tests/      API unit and integration tests
 ```
 
 Project documentation starts at [`docs/README.md`](docs/README.md). The ordered
 implementation backlog is maintained in [`docs/backlog/README.md`](docs/backlog/README.md).
+
+## Run the API and database
+
+With Docker running:
+
+```bash
+dotnet tool restore
+dotnet run --project src/MediaArtArchive.AppHost
+```
+
+The Aspire dashboard URL printed in the terminal provides the API endpoint,
+PostgreSQL status, logs, traces, and health checks. Both the API and PostgreSQL
+run in Docker containers; PostgreSQL data is kept in a persistent Docker volume.
 
 ## Run the frontend
 

@@ -3,3 +3,10 @@ dist
 .env
 .env.local
 *.log
+bin/
+obj/
+.vs/
+.aspire/
+.artifacts/
+TestResults/
+*.user
