@@ -9,7 +9,8 @@ startup commands change.
 Install the following tools:
 
 - [Visual Studio Code](https://code.visualstudio.com/)
-- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
+- [.NET 10.0.301 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) or a
+  newer .NET 10 feature band
 - [Node.js](https://nodejs.org/) with npm
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/), running
   before the backend is started

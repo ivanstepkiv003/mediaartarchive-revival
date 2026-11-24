@@ -1,6 +1,6 @@
 # 001: API foundation
 
-Status: Implemented; live Docker verification pending
+Status: Implemented
 
 ## Goal
 

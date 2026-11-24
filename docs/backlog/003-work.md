@@ -1,6 +1,6 @@
 # 003: Work entity and endpoints
 
-Status: Implemented; live database verification pending
+Status: Implemented
 
 ## Goal
 
