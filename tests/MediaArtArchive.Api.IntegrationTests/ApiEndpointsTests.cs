@@ -43,6 +43,9 @@ public sealed class ApiEndpointsTests(ApiWebApplicationFactory factory)
         Assert.True(paths.TryGetProperty("/api/v1/artists", out _));
         Assert.True(paths.TryGetProperty("/api/v1/works", out _));
         Assert.True(paths.TryGetProperty("/api/v1/publications", out _));
+        Assert.True(paths.TryGetProperty("/api/v1/articles", out _));
+        Assert.True(paths.TryGetProperty("/api/v1/events", out _));
+        Assert.True(paths.TryGetProperty("/api/v1/news", out _));
         Assert.True(paths.TryGetProperty("/api/v1/auth/login/google", out _));
     }
 

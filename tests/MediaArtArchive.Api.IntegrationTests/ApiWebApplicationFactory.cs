@@ -39,6 +39,7 @@ public sealed class ApiWebApplicationFactory : WebApplicationFactory<Program>
             "ConnectionStrings:archive",
             "Host=localhost;Port=1;Database=archive;Username=test;Password=test");
         builder.UseSetting("Database:ApplyMigrations", "false");
+        builder.UseSetting("Database:SeedMockData", "false");
     }
 }
 

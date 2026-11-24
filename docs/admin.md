@@ -2,7 +2,8 @@
 
 Visitors can sign in with a Google account from the public application. The
 React application also exposes a protected administration area at `/admin` for
-creating, editing, and deleting artists, works, and publications.
+creating, editing, and deleting artists, works, articles, events, news, and
+publications.
 
 ## Security model
 
@@ -71,3 +72,20 @@ the API uses another origin.
 After startup, use **Sign in** in the public header. Any permitted Google test
 user can establish a session. Only the email configured as `admin-email` sees
 the administration link and can perform write operations.
+
+## Local content data
+
+PostgreSQL is the single source of truth for public archive content. The public
+site and administration panel use the same API records, including English and
+Ukrainian fields. After an administrator creates, edits, or deletes a record,
+the public site refreshes its shared archive data automatically.
+
+The local Aspire host sets `Database:SeedMockData=true`. On the first startup
+after the content migration, the API stores the representative artists, works,
+articles, events, and news in PostgreSQL and records the `mock-content-v1` seed.
+The seed is versioned and runs only once, so later edits and deletions are not
+overwritten or recreated when the app restarts. Existing mock artists are
+reused by display name to avoid duplicates.
+
+Production environments should omit `Database:SeedMockData` or set it to
+`false` unless placeholder content is explicitly required.

@@ -17,6 +17,7 @@ export default function App() {
   return (
     <Routes>
       <Route path="admin" element={<AdminPage />} />
+      <Route path="admin/artists/:artistId/edit" element={<AdminPage />} />
       <Route element={<AppLayout />}>
         <Route index element={<HomePage />} />
         <Route path="archive" element={<ArchivePage />} />

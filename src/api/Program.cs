@@ -46,12 +46,19 @@ api.MapAuthenticationEndpoints();
 api.MapArtistEndpoints();
 api.MapWorkEndpoints();
 api.MapPublicationEndpoints();
+api.MapArticleEndpoints();
+api.MapEventEndpoints();
+api.MapNewsEndpoints();
 
 if (builder.Configuration.GetValue<bool>("Database:ApplyMigrations"))
 {
     await using var scope = app.Services.CreateAsyncScope();
     var database = scope.ServiceProvider.GetRequiredService<ArchiveDbContext>();
     await database.Database.MigrateAsync();
+    if (builder.Configuration.GetValue<bool>("Database:SeedMockData"))
+    {
+        await MockDataSeeder.SeedAsync(database);
+    }
 }
 
 await app.RunAsync();

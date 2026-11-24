@@ -63,10 +63,15 @@ public static class ArtistEndpoints
     private static Dictionary<string, string[]> Validate(ArtistRequest request)
     {
         var errors = EndpointValidation.Required("displayName", request.DisplayName, 240);
+        EndpointValidation.Optional(errors, "displayNameUk", request.DisplayNameUk, 240);
         EndpointValidation.Optional(errors, "sortName", request.SortName, 240);
+        EndpointValidation.Optional(errors, "sortNameUk", request.SortNameUk, 240);
         EndpointValidation.Optional(errors, "biography", request.Biography, 10_000);
+        EndpointValidation.Optional(errors, "biographyUk", request.BiographyUk, 10_000);
         EndpointValidation.Optional(errors, "location", request.Location, 240);
+        EndpointValidation.Optional(errors, "locationUk", request.LocationUk, 240);
         EndpointValidation.Optional(errors, "activeYears", request.ActiveYears, 120);
+        EndpointValidation.Optional(errors, "activeYearsUk", request.ActiveYearsUk, 120);
         EndpointValidation.Optional(errors, "website", request.Website, 2_000);
         return errors;
     }
@@ -74,18 +79,28 @@ public static class ArtistEndpoints
     private static Artist ApplyTo(this ArtistRequest request, Artist artist)
     {
         artist.DisplayName = request.DisplayName.Trim();
+        artist.DisplayNameUk = EndpointValidation.Clean(request.DisplayNameUk);
         artist.SortName = EndpointValidation.Clean(request.SortName);
+        artist.SortNameUk = EndpointValidation.Clean(request.SortNameUk);
         artist.Biography = EndpointValidation.Clean(request.Biography);
+        artist.BiographyUk = EndpointValidation.Clean(request.BiographyUk);
         artist.Location = EndpointValidation.Clean(request.Location);
+        artist.LocationUk = EndpointValidation.Clean(request.LocationUk);
         artist.ActiveYears = EndpointValidation.Clean(request.ActiveYears);
+        artist.ActiveYearsUk = EndpointValidation.Clean(request.ActiveYearsUk);
         artist.Website = EndpointValidation.Clean(request.Website);
         return artist;
     }
 
     private static ArtistResponse ToResponse(this Artist artist) => new(
-        artist.Id, artist.DisplayName, artist.SortName, artist.Biography, artist.Location,
-        artist.ActiveYears, artist.Website, artist.CreatedAt, artist.UpdatedAt);
+        artist.Id, artist.DisplayName, artist.DisplayNameUk, artist.SortName, artist.SortNameUk,
+        artist.Biography, artist.BiographyUk, artist.Location, artist.LocationUk,
+        artist.ActiveYears, artist.ActiveYearsUk, artist.Website, artist.CreatedAt, artist.UpdatedAt);
 }
 
-public sealed record ArtistRequest(string DisplayName, string? SortName, string? Biography, string? Location, string? ActiveYears, string? Website);
-public sealed record ArtistResponse(Guid Id, string DisplayName, string? SortName, string? Biography, string? Location, string? ActiveYears, string? Website, DateTimeOffset CreatedAt, DateTimeOffset UpdatedAt);
+public sealed record ArtistRequest(string DisplayName, string? DisplayNameUk, string? SortName, string? SortNameUk,
+    string? Biography, string? BiographyUk, string? Location, string? LocationUk,
+    string? ActiveYears, string? ActiveYearsUk, string? Website);
+public sealed record ArtistResponse(Guid Id, string DisplayName, string? DisplayNameUk, string? SortName, string? SortNameUk,
+    string? Biography, string? BiographyUk, string? Location, string? LocationUk,
+    string? ActiveYears, string? ActiveYearsUk, string? Website, DateTimeOffset CreatedAt, DateTimeOffset UpdatedAt);

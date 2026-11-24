@@ -3,15 +3,14 @@ import { ArticleCard } from '../components/ArticleCard'
 import { ArtworkCard } from '../components/ArtworkCard'
 import { EventCard } from '../components/EventCard'
 import { SectionHeader } from '../components/SectionHeader'
-import { archiveService } from '../services/archiveService'
+import { useArchiveData } from '../services/archiveData'
+import { ArchiveDataState } from '../components/ArchiveDataState'
 import { useTranslation } from 'react-i18next'
 
 export function HomePage() {
   const { t } = useTranslation()
-  const artworks = archiveService.getArtworks()
-  const articles = archiveService.getArticles()
-  const events = archiveService.getEvents()
-  const news = archiveService.getNews()
+  const { artworks, artists, articles, events, news, loading, error } = useArchiveData()
+  if (loading || error) return <ArchiveDataState loading={loading} error={error} />
 
   return <>
     <section className="home-hero container">
@@ -28,14 +27,14 @@ export function HomePage() {
     <section className="explore-section">
       <div className="container"><SectionHeader kicker={t('home.browse')} title={t('home.exploreTitle')} /></div>
       <div className="explore-links container">
-        <Link to="/archive"><span className="explore-number">01</span><span>{t('home.artworks')}</span><span className="explore-meta">{t('common.records', { count: 6 })}</span><span aria-hidden="true">→</span></Link>
-        <Link to="/artists"><span className="explore-number">02</span><span>{t('home.artists')}</span><span className="explore-meta">{t('common.records', { count: 4 })}</span><span aria-hidden="true">→</span></Link>
+        <Link to="/archive"><span className="explore-number">01</span><span>{t('home.artworks')}</span><span className="explore-meta">{t('common.records', { count: artworks.length })}</span><span aria-hidden="true">→</span></Link>
+        <Link to="/artists"><span className="explore-number">02</span><span>{t('home.artists')}</span><span className="explore-meta">{t('common.records', { count: artists.length })}</span><span aria-hidden="true">→</span></Link>
       </div>
     </section>
 
     <section className="home-section container">
       <SectionHeader kicker={t('home.writing')} title={t('home.latestArticles')} link="/articles" />
-      <div className="article-grid"><ArticleCard article={articles[0]} featured />{articles.slice(1).map((article) => <ArticleCard key={article.id} article={article} />)}</div>
+      <div className="article-grid">{articles[0] && <ArticleCard article={articles[0]} featured />}{articles.slice(1).map((article) => <ArticleCard key={article.id} article={article} />)}</div>
     </section>
 
     <section className="split-section container">

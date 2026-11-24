@@ -17,6 +17,18 @@ internal static class EndpointValidation
         return errors;
     }
 
+    public static void Required(Dictionary<string, string[]> errors, string field, string? value, int maxLength)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            errors[field] = ["The field is required."];
+        }
+        else if (value.Trim().Length > maxLength)
+        {
+            errors[field] = [$"The field cannot exceed {maxLength} characters."];
+        }
+    }
+
     public static void Optional(Dictionary<string, string[]> errors, string field, string? value, int maxLength)
     {
         if (!string.IsNullOrWhiteSpace(value) && value.Trim().Length > maxLength)

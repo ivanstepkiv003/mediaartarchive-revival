@@ -2,16 +2,19 @@ import { Link, useParams } from 'react-router-dom'
 import { ArtworkCard } from '../components/ArtworkCard'
 import { MetadataList } from '../components/MetadataList'
 import { SectionHeader } from '../components/SectionHeader'
-import { archiveService } from '../services/archiveService'
+import { useArchiveData } from '../services/archiveData'
+import { ArchiveDataState } from '../components/ArchiveDataState'
 import { NotFoundPage } from './NotFoundPage'
 import { useTranslation } from 'react-i18next'
 
 export function ArtworkDetailPage() {
   const { t } = useTranslation()
   const { artworkId } = useParams()
-  const artwork = archiveService.getArtwork(artworkId ?? '')
+  const { artworks, loading, error } = useArchiveData()
+  if (loading || error) return <ArchiveDataState loading={loading} error={error} />
+  const artwork = artworks.find((item) => item.id === artworkId)
   if (!artwork) return <NotFoundPage />
-  const related = archiveService.getArtworks().filter((item) => item.id !== artwork.id).slice(0, 3)
+  const related = artworks.filter((item) => item.id !== artwork.id).slice(0, 3)
   return <article>
     <header className="detail-header container"><p className="eyebrow">{t('artwork.record')}</p><div className="detail-heading"><h1>{artwork.title}</h1><p><Link to={`/artists/${artwork.artistId}`}>{artwork.artist}</Link><br />{artwork.year}</p></div></header>
     <div className="artwork-media-full" style={{ '--art-accent': artwork.accent } as React.CSSProperties} role="img" aria-label={`${t('artwork.mediaPlaceholder')}: ${artwork.title}`}><span>{t('artwork.mediaPlaceholder')}</span><strong aria-hidden="true">{artwork.title.slice(0, 2)}</strong></div>

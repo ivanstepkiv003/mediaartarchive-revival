@@ -318,8 +318,12 @@ h1, h2, h3, p { margin-top: 0; }
 .admin-tabs button.active { background: var(--ink); color: var(--paper); }
 .admin-message { padding: 12px 0; margin: 0; font: .65rem var(--mono); }
 .admin-workspace { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; padding-top: 34px; }
+.admin-workspace-list { display: block; }
 .admin-section-title { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; }
 .admin-section-title h2 { text-transform: capitalize; font: 400 2.8rem var(--serif); }
+.admin-section-title h2 span { margin-left: 8px; color: var(--muted); font: .62rem var(--mono); vertical-align: middle; }
+.admin-empty { padding: 24px; border: 1px dashed var(--rule); }
+.admin-empty p { color: var(--muted); font-size: .78rem; }
 .admin-record { display: flex; justify-content: space-between; gap: 18px; padding: 18px 0; border-top: 1px solid var(--rule); }
 .admin-record:last-child { border-bottom: 1px solid var(--rule); }
 .admin-record h3 { margin: 0; font: 400 1.4rem var(--serif); }
@@ -330,15 +334,38 @@ h1, h2, h3, p { margin-top: 0; }
 .admin-editor form { display: grid; gap: 16px; margin-top: 24px; }
 .admin-field { display: grid; gap: 7px; }
 .admin-field span, .admin-editor legend { font: .6rem var(--mono); text-transform: uppercase; }
-.admin-field input, .admin-field textarea { width: 100%; border: 1px solid var(--rule); background: #fff; padding: 11px; font: .85rem/1.4 Arial, sans-serif; }
+.admin-field input, .admin-field textarea, .admin-field select { width: 100%; border: 1px solid var(--rule); background: #fff; padding: 11px; font: .85rem/1.4 Arial, sans-serif; }
 .admin-field textarea { min-height: 120px; resize: vertical; }
+.data-state { min-height: 45vh; padding-top: 5rem; font-size: 1.1rem; }
 .admin-editor fieldset { border: 1px solid var(--rule); padding: 12px; display: grid; gap: 8px; }
 .admin-check { display: flex; gap: 8px; align-items: center; font-size: .75rem; }
 .admin-editor .admin-primary { justify-self: start; margin-top: 8px; }
+.admin-edit-header { display: flex; justify-content: space-between; gap: 32px; align-items: end; padding-bottom: 28px; border-bottom: 1px solid var(--ink); }
+.admin-edit-header h1 { margin: 12px 0 0; font: 500 clamp(3rem, 6vw, 6rem)/.88 Inter, sans-serif; letter-spacing: -.06em; }
+.admin-edit-header > span { max-width: 320px; text-align: right; font: .72rem/1.4 var(--mono); }
+.admin-page-back { display: inline-block; margin-bottom: 34px; font: .65rem var(--mono); text-decoration: underline; text-underline-offset: 3px; }
+.admin-edit-header .admin-page-back { margin-bottom: 24px; }
+.admin-editor-page { width: min(760px, 100%); margin: 40px auto 0; position: static; }
+.admin-edit-not-found { padding-top: 70px; }
+.admin-edit-not-found h1 { max-width: 900px; font: 400 clamp(4rem, 8vw, 8rem)/.9 var(--serif); }
+.admin-modal-backdrop { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 24px; background: rgba(22,24,22,.72); overflow-y: auto; }
+.admin-modal { width: min(720px, 100%); max-height: calc(100vh - 48px); overflow-y: auto; background: var(--paper); padding: 28px; box-shadow: 12px 12px 0 rgba(0,0,0,.28); }
+.admin-modal > header { display: flex; align-items: start; justify-content: space-between; gap: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--ink); }
+.admin-modal > header h2 { margin: 5px 0 0; font: 400 2.8rem var(--serif); }
+.admin-modal > header .eyebrow { margin: 0; }
+.admin-modal > header > button { border: 0; background: transparent; cursor: pointer; font-size: 1.8rem; line-height: 1; }
+.admin-modal form { display: grid; gap: 16px; padding-top: 24px; }
+.admin-modal-actions { display: flex; justify-content: flex-end; align-items: center; gap: 12px; padding-top: 8px; }
+.admin-modal-actions > button:not(.admin-primary) { border: 0; background: transparent; text-decoration: underline; cursor: pointer; }
+.admin-modal-actions > a { font-size: .72rem; text-decoration: underline; text-underline-offset: 3px; }
 
 @media (max-width: 800px) {
   .admin-workspace { grid-template-columns: 1fr; }
   .admin-editor { position: static; }
   .admin-header { align-items: start; flex-direction: column; }
+  .admin-edit-header { align-items: start; flex-direction: column; }
+  .admin-edit-header > span { text-align: left; }
   .admin-tabs { overflow-x: auto; }
+  .admin-modal-backdrop { padding: 12px; place-items: start center; }
+  .admin-modal { max-height: calc(100vh - 24px); padding: 20px; }
 }
