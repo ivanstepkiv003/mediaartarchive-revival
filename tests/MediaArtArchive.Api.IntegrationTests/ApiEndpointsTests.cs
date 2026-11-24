@@ -47,11 +47,23 @@ public sealed class ApiEndpointsTests(ApiWebApplicationFactory factory)
     }
 
     [Fact]
-    public async Task Signed_out_admin_session_returns_unauthorized()
+    public async Task Signed_out_user_session_returns_unauthorized()
     {
         var response = await _client.GetAsync("/api/v1/auth/me");
 
         Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task Authenticated_user_session_reports_admin_access()
+    {
+        using var client = factory.CreateAuthenticatedClient();
+        var response = await client.GetAsync("/api/v1/auth/me");
+
+        response.EnsureSuccessStatusCode();
+        using var payload = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+        Assert.Equal("user@example.test", payload.RootElement.GetProperty("email").GetString());
+        Assert.True(payload.RootElement.GetProperty("isAdmin").GetBoolean());
     }
 
     [Fact]
@@ -69,6 +81,15 @@ public sealed class ApiEndpointsTests(ApiWebApplicationFactory factory)
         var response = await client.PostAsJsonAsync("/api/v1/artists", new { displayName = "Test artist" });
 
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task Authenticated_non_admin_write_is_forbidden()
+    {
+        using var client = factory.CreateAuthenticatedClient(isAdmin: false);
+        var response = await client.PostAsJsonAsync("/api/v1/artists", new { displayName = "Test artist" });
+
+        Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
     }
 
     private sealed record ApiInformationResponse(string Name, string Version);

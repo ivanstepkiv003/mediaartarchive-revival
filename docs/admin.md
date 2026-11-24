@@ -1,13 +1,15 @@
-# Administration
+# Google authentication and administration
 
-The React application exposes a protected administration area at `/admin` for
+Visitors can sign in with a Google account from the public application. The
+React application also exposes a protected administration area at `/admin` for
 creating, editing, and deleting artists, works, and publications.
 
 ## Security model
 
-- Google OAuth authenticates the person.
+- Google OAuth authenticates the person and creates an HTTP-only application
+  session. The application does not store Google access or refresh tokens.
 - `Authentication:AdminEmails` is an explicit allowlist; a valid Google account
-  that is not listed cannot become an administrator.
+  that is not listed can sign in but cannot become an administrator.
 - The API stores authentication in an HTTP-only cookie.
 - Every create, update, delete, and logout request requires an antiforgery token.
 - API credentials and administrator email addresses are supplied at runtime and
@@ -18,15 +20,24 @@ for localhost development.
 
 ## Google Cloud configuration
 
-Create an OAuth 2.0 Web application in Google Cloud and add this authorized
-redirect URI for local development:
+In Google Cloud:
+
+1. Create or select a project.
+2. Configure the Google Auth Platform branding and audience. Use an **External**
+   audience when any Google account should be able to sign in.
+3. While the app is in testing mode, add every account that should test login
+   to the **Test users** list.
+4. Create an OAuth client with the **Web application** type.
+5. Add this exact authorized redirect URI for local development:
 
 ```text
 http://localhost:5100/signin-google
 ```
 
-Add the production API callback URL separately when a production hostname is
-available.
+The scheme, host, port, and path must match exactly. Add the production API
+callback URL separately when a production hostname is available; production
+OAuth callbacks must use HTTPS. Publishing the External app allows Google
+accounts outside the test-user list to sign in.
 
 ## Local secrets
 
@@ -37,6 +48,9 @@ dotnet user-secrets set "Parameters:google-client-id" "<google-client-id>" --pro
 dotnet user-secrets set "Parameters:google-client-secret" "<google-client-secret>" --project src/MediaArtArchive.AppHost
 dotnet user-secrets set "Parameters:admin-email" "<allowed-google-account>" --project src/MediaArtArchive.AppHost
 ```
+
+The client ID normally ends in `.apps.googleusercontent.com`. Never paste the
+client secret into source files, `appsettings.json`, or documentation.
 
 Start the backend and database:
 
@@ -53,3 +67,7 @@ npm run dev
 
 The client uses `http://localhost:5100` by default. Set `VITE_API_BASE_URL` when
 the API uses another origin.
+
+After startup, use **Sign in** in the public header. Any permitted Google test
+user can establish a session. Only the email configured as `admin-email` sees
+the administration link and can perform write operations.

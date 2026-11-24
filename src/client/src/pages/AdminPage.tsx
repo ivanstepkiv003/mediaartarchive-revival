@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { adminService, type AdminSession, type ArtistAdmin, type PublicationAdmin, type WorkAdmin } from '../services/adminService'
+import { adminService, type ArtistAdmin, type PublicationAdmin, type WorkAdmin } from '../services/adminService'
+import { authService, type UserSession } from '../services/authService'
 
 type Section = 'artists' | 'works' | 'publications'
 const emptyArtist = { displayName: '', sortName: '', biography: '', location: '', activeYears: '', website: '' }
@@ -9,7 +10,7 @@ const emptyPublication = { title: '', type: '', publisher: '', publicationDate: 
 
 export function AdminPage() {
   const { t } = useTranslation()
-  const [session, setSession] = useState<AdminSession | null>()
+  const [session, setSession] = useState<UserSession | null>()
   const [section, setSection] = useState<Section>('artists')
   const [artists, setArtists] = useState<ArtistAdmin[]>([])
   const [works, setWorks] = useState<WorkAdmin[]>([])
@@ -33,8 +34,11 @@ export function AdminPage() {
   }, [])
 
   useEffect(() => {
-    adminService.session()
-      .then(async current => { setSession(current); await loadContent() })
+    authService.session()
+      .then(async current => {
+        setSession(current)
+        if (current.isAdmin) await loadContent()
+      })
       .catch(() => setSession(null))
   }, [loadContent])
 
@@ -66,7 +70,18 @@ export function AdminPage() {
         <h1>{t('admin.title')}</h1>
         <p>{t('admin.loginPrompt')}</p>
         {message && <p className="admin-message" role="alert">{message}</p>}
-        <a className="admin-primary" href={adminService.loginUrl}>{t('admin.continueGoogle')}</a>
+        <a className="admin-primary" href={authService.loginUrl('/admin')}>{t('admin.continueGoogle')}</a>
+        <a className="admin-back" href="/">{t('admin.returnArchive')}</a>
+      </div>
+    </main>
+  )
+  if (!session.isAdmin) return (
+    <main className="admin-login">
+      <div>
+        <p className="eyebrow">{t('admin.restricted')}</p>
+        <h1>{t('auth.notAuthorizedTitle')}</h1>
+        <p>{t('auth.notAuthorized')}</p>
+        <button className="admin-primary" onClick={() => void authService.logout().then(() => setSession(null))}>{t('admin.signOut')}</button>
         <a className="admin-back" href="/">{t('admin.returnArchive')}</a>
       </div>
     </main>
@@ -92,7 +107,7 @@ export function AdminPage() {
     <main className="admin-shell">
       <header className="admin-header">
         <div><p className="eyebrow">{t('admin.contentManagement')}</p><h1>{t('admin.adminTitle')}</h1></div>
-        <div className="admin-user"><span>{session.name || session.email}</span><button onClick={() => void adminService.logout().then(() => setSession(null))}>{t('admin.signOut')}</button></div>
+        <div className="admin-user"><span>{session.name || session.email}</span><button onClick={() => void authService.logout().then(() => setSession(null))}>{t('admin.signOut')}</button></div>
       </header>
       <nav className="admin-tabs" aria-label="Content types">
         {(['artists', 'works', 'publications'] as Section[]).map(item =>

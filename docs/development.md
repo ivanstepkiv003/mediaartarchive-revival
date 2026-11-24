@@ -74,9 +74,10 @@ $env:VITE_API_BASE_URL = "http://localhost:5100"
 npm run dev
 ```
 
-Google administrator authentication requires local user secrets and Google
-Cloud OAuth configuration. Follow the [administration guide](admin.md); never
-commit credentials or administrator email addresses to the repository.
+Google user authentication and administrator access require local user secrets
+and Google Cloud OAuth configuration. Follow the
+[authentication and administration guide](admin.md); never commit credentials
+or administrator email addresses to the repository.
 
 ## Build and test
 

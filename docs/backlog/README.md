@@ -12,6 +12,7 @@ a working state and include tests and documentation for its public contract.
 | 5 | [Article entity and endpoints](005-article.md) | 1, 4 | Planned |
 | 6 | [Connect the client to the API](006-client-integration.md) | 2–5 | Planned |
 | 7 | [Google-authenticated admin panel](007-admin-panel.md) | 2–4 | Implemented; live Google verification pending |
+| 8 | [Google user login](008-google-user-login.md) | 7 | Implemented; live Google verification pending |
 
 ## Future candidates
 

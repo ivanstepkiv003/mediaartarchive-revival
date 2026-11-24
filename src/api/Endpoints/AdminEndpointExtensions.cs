@@ -6,7 +6,7 @@ namespace MediaArtArchive.Api.Endpoints;
 internal static class AdminEndpointExtensions
 {
     public static RouteHandlerBuilder RequireAdminMutation(this RouteHandlerBuilder endpoint) =>
-        endpoint.RequireAuthorization(AdminAuthentication.Policy)
+        endpoint.RequireAuthorization(ArchiveAuthentication.AdminPolicy)
             .AddEndpointFilter<ValidateAntiforgeryFilter>();
 }
 

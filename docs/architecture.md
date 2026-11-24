@@ -44,7 +44,9 @@ keys.
 - Publish an OpenAPI document and use it as the client/server contract.
 - Keep domain models separate from API request and response models.
 
-Authentication, editorial workflows, public/private visibility, and media
-storage were initially deferred. Google authentication and the administrator
-email allowlist now protect the first editorial CRUD workflow; richer roles and
-review/publishing states remain future work.
+Google OAuth provides user sessions through an HTTP-only cookie. Any valid
+Google account permitted by the OAuth consent-screen audience can sign in, but
+only identities whose email is on the administrator allowlist receive the
+admin claim required by editorial CRUD endpoints. User persistence, richer
+roles, review/publishing states, public/private visibility, and media storage
+remain future work.

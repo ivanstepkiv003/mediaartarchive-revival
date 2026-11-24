@@ -1,6 +1,19 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
+const authResources = {
+  en: {
+    signIn: 'Sign in', signOut: 'Sign out', admin: 'Admin', loginError: 'Google sign-in could not be completed.',
+    notAuthorizedTitle: 'Administrator access required',
+    notAuthorized: 'You are signed in, but this Google account is not authorized to manage archive records.',
+  },
+  uk: {
+    signIn: 'Увійти', signOut: 'Вийти', admin: 'Адміністрування', loginError: 'Не вдалося завершити вхід через Google.',
+    notAuthorizedTitle: 'Потрібен доступ адміністратора',
+    notAuthorized: 'Ви ввійшли, але цей обліковий запис Google не має дозволу керувати записами архіву.',
+  },
+} as const
+
 const adminResources = {
   en: {
     restricted: 'Restricted area', title: 'Archive administration', loginPrompt: 'Sign in with an authorized Google account to manage archive records.',
@@ -28,6 +41,7 @@ const adminResources = {
 
 const resources = {
   en: { translation: {
+    auth: authResources.en,
     admin: adminResources.en,
     common: { skip: 'Skip to content', home: 'Home', programmeName: 'Ukrainian Media Art Archive', placeholder: 'Placeholder', records: '{{count}} records', viewAll: 'View all', imagePlaceholder: 'Image placeholder', sorted: 'Sorted: Recent first', allArtworks: 'All artworks', recordStatus: 'Record status', placeholderContent: 'Placeholder content is marked as such.', language: 'Language', artworkBy: '{{title}} by {{artist}}', abstractPlaceholder: 'Abstract placeholder for {{title}}' },
     platform: { label: 'Art / Technology / Memory', statement: 'An independent platform for Ukrainian art, technology, archives, and research.', shortLabel: 'Independent cultural platform', development: 'Platform in development · 2026' },
@@ -44,6 +58,7 @@ const resources = {
     notFound: { eyebrow: '404 / Record not found', title: 'This page is not in the archive.', back: 'Return to the homepage' },
   } },
   uk: { translation: {
+    auth: authResources.uk,
     admin: adminResources.uk,
     common: { skip: 'Перейти до вмісту', home: 'Головна', programmeName: 'Український Медіа Арт Архів', placeholder: 'Макетний запис', records: '{{count}} записів', viewAll: 'Переглянути все', imagePlaceholder: 'Місце для зображення', sorted: 'Сортування: спочатку нові', allArtworks: 'Усі роботи', recordStatus: 'Статус запису', placeholderContent: 'Макетний вміст має відповідне позначення.', language: 'Мова', artworkBy: '{{title}}, автор: {{artist}}', abstractPlaceholder: 'Абстрактний макет для роботи «{{title}}»' },
     platform: { label: 'Мистецтво / Технології / Пам’ять', statement: 'Незалежна платформа українського мистецтва, технологій, архівів і досліджень.', shortLabel: 'Незалежна культурна платформа', development: 'Платформа у розробці · 2026' },

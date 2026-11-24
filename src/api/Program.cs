@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 builder.AddNpgsqlDbContext<ArchiveDbContext>("archive");
-builder.Services.AddAdminAuthentication(builder.Configuration);
+builder.Services.AddArchiveAuthentication(builder.Configuration);
 builder.Services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
 {

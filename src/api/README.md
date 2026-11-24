@@ -26,7 +26,9 @@ the repository. Database data persists in a Docker volume between AppHost runs.
 - `GET /api/v1/artists` — public artist records.
 - `GET /api/v1/works` — public work records.
 - `GET /api/v1/publications` — public publication records.
-- `GET /api/v1/auth/login/google` — administrator Google sign-in.
+- `GET /api/v1/auth/login/google` — Google user sign-in.
+- `GET /api/v1/auth/me` — current user session and administrator status.
+- `POST /api/v1/auth/logout` — end the current user session.
 - `GET /health` — readiness, including PostgreSQL connectivity.
 - `GET /alive` — process liveness.
 - `GET /openapi/v1.json` — OpenAPI document in Development.

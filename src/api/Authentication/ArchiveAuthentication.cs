@@ -4,11 +4,12 @@ using Microsoft.AspNetCore.Authentication.Google;
 
 namespace MediaArtArchive.Api.Authentication;
 
-public static class AdminAuthentication
+public static class ArchiveAuthentication
 {
-    public const string Policy = "Admin";
+    public const string AdminPolicy = "Admin";
+    public const string AdminClaimType = "mediaartarchive:admin";
 
-    public static IServiceCollection AddAdminAuthentication(
+    public static IServiceCollection AddArchiveAuthentication(
         this IServiceCollection services,
         IConfiguration configuration)
     {
@@ -28,12 +29,22 @@ public static class AdminAuthentication
             })
             .AddCookie(options =>
             {
-                options.Cookie.Name = "mediaartarchive.admin";
+                options.Cookie.Name = "mediaartarchive.auth";
                 options.Cookie.HttpOnly = true;
                 options.Cookie.SameSite = SameSiteMode.Lax;
                 options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
                 options.ExpireTimeSpan = TimeSpan.FromHours(8);
                 options.SlidingExpiration = true;
+                options.Events.OnRedirectToLogin = context =>
+                {
+                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                    return Task.CompletedTask;
+                };
+                options.Events.OnRedirectToAccessDenied = context =>
+                {
+                    context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                    return Task.CompletedTask;
+                };
             })
             .AddGoogle(options =>
             {
@@ -43,11 +54,10 @@ public static class AdminAuthentication
                 options.Events.OnCreatingTicket = context =>
                 {
                     var email = context.Principal?.FindFirstValue(ClaimTypes.Email);
-                    var isAllowed = IsAllowedAdminEmail(email, adminEmails);
-
-                    if (!isAllowed)
+                    if (IsAllowedAdminEmail(email, adminEmails)
+                        && context.Principal?.Identity is ClaimsIdentity identity)
                     {
-                        context.Fail("The Google account is not authorized as an administrator.");
+                        identity.AddClaim(new Claim(AdminClaimType, bool.TrueString));
                     }
 
                     return Task.CompletedTask;
@@ -55,13 +65,14 @@ public static class AdminAuthentication
                 options.Events.OnRemoteFailure = context =>
                 {
                     context.HandleResponse();
-                    context.Response.Redirect($"{clientUrl}/admin?error=access_denied");
+                    context.Response.Redirect($"{clientUrl}/?authError=google");
                     return Task.CompletedTask;
                 };
             });
 
         services.AddAuthorizationBuilder()
-            .AddPolicy(Policy, policy => policy.RequireAuthenticatedUser());
+            .AddPolicy(AdminPolicy, policy =>
+                policy.RequireClaim(AdminClaimType, bool.TrueString));
 
         return services;
     }

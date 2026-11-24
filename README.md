@@ -33,8 +33,9 @@ The Aspire dashboard URL printed in the terminal provides the API endpoint,
 PostgreSQL status, logs, traces, and health checks. Both the API and PostgreSQL
 run in Docker containers; PostgreSQL data is kept in a persistent Docker volume.
 
-Google administrator authentication must be configured before using `/admin`.
-See [`docs/admin.md`](docs/admin.md) for the Google Cloud and local-secret setup.
+Google authentication must be configured before users can sign in or access
+`/admin`. See [`docs/admin.md`](docs/admin.md) for the Google Cloud and
+local-secret setup.
 
 Then, in a second terminal:
 

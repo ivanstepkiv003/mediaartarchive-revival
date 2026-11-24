@@ -13,7 +13,7 @@ public static class AuthenticationEndpoints
     {
         var auth = api.MapGroup("/auth").WithTags("Authentication");
 
-        auth.MapGet("/login/google", (GoogleConfiguration google, IConfiguration configuration) =>
+        auth.MapGet("/login/google", (string? returnUrl, GoogleConfiguration google, IConfiguration configuration) =>
             {
                 if (!google.IsConfigured)
                 {
@@ -26,7 +26,7 @@ public static class AuthenticationEndpoints
                     ?? "http://localhost:5173";
                 var properties = new AuthenticationProperties
                 {
-                    RedirectUri = $"{clientUrl}/admin"
+                    RedirectUri = $"{clientUrl}{NormalizeReturnUrl(returnUrl)}"
                 };
                 return Results.Challenge(properties, [GoogleDefaults.AuthenticationScheme]);
             })
@@ -34,13 +34,14 @@ public static class AuthenticationEndpoints
 
         auth.MapGet("/me", (ClaimsPrincipal user) =>
             user.Identity?.IsAuthenticated == true
-                ? Results.Ok(new AdminSession(
+                ? Results.Ok(new UserSession(
                     user.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty,
                     user.FindFirstValue(ClaimTypes.Name) ?? user.Identity.Name ?? string.Empty,
-                    user.FindFirstValue(ClaimTypes.Email) ?? string.Empty))
+                    user.FindFirstValue(ClaimTypes.Email) ?? string.Empty,
+                    user.HasClaim(ArchiveAuthentication.AdminClaimType, bool.TrueString)))
                 : Results.Unauthorized())
-            .WithName("GetAdminSession")
-            .Produces<AdminSession>()
+            .WithName("GetUserSession")
+            .Produces<UserSession>()
             .Produces(StatusCodes.Status401Unauthorized);
 
         auth.MapGet("/antiforgery", (IAntiforgery antiforgery, HttpContext context) =>
@@ -48,8 +49,8 @@ public static class AuthenticationEndpoints
                 var tokens = antiforgery.GetAndStoreTokens(context);
                 return Results.Ok(new AntiforgeryToken(tokens.RequestToken!));
             })
-            .RequireAuthorization(AdminAuthentication.Policy)
-            .WithName("GetAdminAntiforgeryToken")
+            .RequireAuthorization()
+            .WithName("GetUserAntiforgeryToken")
             .Produces<AntiforgeryToken>();
 
         auth.MapPost("/logout", async (HttpContext context) =>
@@ -57,13 +58,22 @@ public static class AuthenticationEndpoints
                 await context.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
                 return Results.NoContent();
             })
-            .RequireAuthorization(AdminAuthentication.Policy)
+            .RequireAuthorization()
             .AddEndpointFilter<ValidateAntiforgeryFilter>()
-            .WithName("LogoutAdmin");
+            .WithName("LogoutUser");
 
         return api;
     }
+
+    internal static string NormalizeReturnUrl(string? returnUrl) =>
+        !string.IsNullOrWhiteSpace(returnUrl)
+        && returnUrl.StartsWith('/')
+        && !returnUrl.StartsWith("//")
+        && !returnUrl.Contains('\\')
+        && returnUrl.All(character => !char.IsControl(character))
+            ? returnUrl
+            : "/";
 }
 
-public sealed record AdminSession(string Id, string Name, string Email);
+public sealed record UserSession(string Id, string Name, string Email, bool IsAdmin);
 public sealed record AntiforgeryToken(string Token);

@@ -41,6 +41,12 @@ h1, h2, h3, p { margin-top: 0; }
 .site-nav a::after { content: ''; position: absolute; left: 0; right: 100%; bottom: 5px; height: 1px; background: currentColor; transition: right .2s; }
 .site-nav a:hover::after, .site-nav a.active::after { right: 0; }
 .header-actions { display: flex; align-items: center; gap: clamp(22px, 3vw, 52px); }
+.account-action, .account-session { font: .6rem var(--mono); text-transform: uppercase; white-space: nowrap; }
+.account-action, .account-session a, .account-session button { text-decoration: underline; text-underline-offset: 3px; }
+.account-session { display: flex; align-items: center; gap: 10px; }
+.account-session > span { max-width: 130px; overflow: hidden; text-overflow: ellipsis; }
+.account-session button { border: 0; padding: 0; background: transparent; cursor: pointer; text-transform: inherit; }
+.auth-error { max-width: 180px; color: #a22618; font: .6rem/1.3 var(--mono); }
 .language-switcher { display: flex; align-items: center; gap: 5px; font: .6rem var(--mono); }
 .language-switcher button { border: 0; padding: 7px 2px; background: transparent; cursor: pointer; opacity: .45; font: inherit; }
 .language-switcher button.active { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
@@ -209,6 +215,7 @@ h1, h2, h3, p { margin-top: 0; }
   .desktop-nav { display: none; }
   .menu-button { display: flex; }
   .header-actions { margin-left: auto; margin-right: 24px; }
+  .account-session > span { display: none; }
   .mobile-nav { display: block; position: absolute; top: 119px; left: 0; right: 0; background: var(--ink); color: var(--paper); padding: 20px 24px 32px; }
   .mobile-nav .site-nav { display: flex; flex-direction: column; align-items: stretch; gap: 0; }
   .mobile-nav .site-nav a { padding: 14px 0; border-bottom: 1px solid #555751; font: 2rem var(--serif); }
@@ -235,6 +242,7 @@ h1, h2, h3, p { margin-top: 0; }
   .wordmark-mark { width: 36px; height: 36px; }
   .wordmark > span:last-child { display: none; }
   .header-actions { margin-right: 10px; }
+  .account-session a { display: none; }
   .archive-sentence { padding-block: 7px; }
   .archive-sentence p { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .mobile-nav { top: 113px; }
