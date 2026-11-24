@@ -1,5 +1,7 @@
 # 003: Work entity and endpoints
 
+Status: Implemented; live database verification pending
+
 ## Goal
 
 Persist creative works and relate them to their artists.

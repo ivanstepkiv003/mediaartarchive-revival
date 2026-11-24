@@ -23,6 +23,10 @@ the repository. Database data persists in a Docker volume between AppHost runs.
 ## Useful endpoints
 
 - `GET /api/v1` — API identity and supported version.
+- `GET /api/v1/artists` — public artist records.
+- `GET /api/v1/works` — public work records.
+- `GET /api/v1/publications` — public publication records.
+- `GET /api/v1/auth/login/google` — administrator Google sign-in.
 - `GET /health` — readiness, including PostgreSQL connectivity.
 - `GET /alive` — process liveness.
 - `GET /openapi/v1.json` — OpenAPI document in Development.

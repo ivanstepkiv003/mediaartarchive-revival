@@ -45,4 +45,6 @@ keys.
 - Keep domain models separate from API request and response models.
 
 Authentication, editorial workflows, public/private visibility, and media
-storage are intentionally deferred until their requirements are defined.
+storage were initially deferred. Google authentication and the administrator
+email allowlist now protect the first editorial CRUD workflow; richer roles and
+review/publishing states remain future work.

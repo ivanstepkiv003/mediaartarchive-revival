@@ -1,5 +1,7 @@
 # 002: Artist entity and endpoints
 
+Status: Implemented; live database verification pending
+
 ## Goal
 
 Persist artists and expose the first archive resource through the API.

@@ -5,6 +5,9 @@ platform and the revived Ukrainian Media Art Archive.
 
 ## Contents
 
+- [Local development](development.md) — prerequisites, configuration, VS Code
+  startup instructions, and verification commands.
+- [Administration](admin.md) — Google authentication and local secret setup.
 - [Architecture](architecture.md) — the initial application shape and boundaries.
 - [Data model](data-model.md) — the proposed domain entities and relationships.
 - [Database decision](decisions/0001-primary-database.md) — PostgreSQL versus MongoDB.

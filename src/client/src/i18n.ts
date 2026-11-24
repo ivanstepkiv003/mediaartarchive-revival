@@ -1,8 +1,34 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
+const adminResources = {
+  en: {
+    restricted: 'Restricted area', title: 'Archive administration', loginPrompt: 'Sign in with an authorized Google account to manage archive records.',
+    loginError: 'Google sign-in failed or this account is not authorized.', continueGoogle: 'Continue with Google', returnArchive: 'Return to the public archive',
+    loading: 'Loading admin session...', saving: 'Saving...', requestFailed: 'The request failed.', contentManagement: 'Content management', adminTitle: 'Archive admin', signOut: 'Sign out',
+    artists: 'Artists', works: 'Works', publications: 'Publications', newRecord: 'New record', editRecord: 'Edit record', edit: 'Edit', delete: 'Delete', createRecord: 'Create record', saveChanges: 'Save changes',
+    displayName: 'Display name', sortName: 'Sort name', location: 'Location', activeYears: 'Active years', website: 'Website', biography: 'Biography',
+    workTitle: 'Title', creationDate: 'Creation date', medium: 'Medium', city: 'City', context: 'Context', description: 'Description', workArtists: 'Artists',
+    publicationTitle: 'Title', type: 'Type', publisher: 'Publisher', publicationDate: 'Publication date', isbn: 'ISBN', issn: 'ISSN',
+    created: '{{type}} created.', updated: '{{type}} updated.', deleted: '{{type}} deleted.', confirmDelete: 'Delete {{type}} "{{title}}"? This cannot be undone.',
+    artist: 'Artist', work: 'Work', publication: 'Publication',
+  },
+  uk: {
+    restricted: 'Обмежений доступ', title: 'Адміністрування архіву', loginPrompt: 'Увійдіть через авторизований обліковий запис Google, щоб керувати записами архіву.',
+    loginError: 'Не вдалося увійти через Google або цей обліковий запис не авторизовано.', continueGoogle: 'Продовжити з Google', returnArchive: 'Повернутися до публічного архіву',
+    loading: 'Завантаження сесії адміністратора...', saving: 'Збереження...', requestFailed: 'Не вдалося виконати запит.', contentManagement: 'Керування вмістом', adminTitle: 'Адміністрування архіву', signOut: 'Вийти',
+    artists: 'Митці', works: 'Роботи', publications: 'Публікації', newRecord: 'Новий запис', editRecord: 'Редагування запису', edit: 'Редагувати', delete: 'Видалити', createRecord: 'Створити запис', saveChanges: 'Зберегти зміни',
+    displayName: 'Ім’я для відображення', sortName: 'Ім’я для сортування', location: 'Місце', activeYears: 'Роки діяльності', website: 'Вебсайт', biography: 'Біографія',
+    workTitle: 'Назва', creationDate: 'Дата створення', medium: 'Медіум', city: 'Місто', context: 'Контекст', description: 'Опис', workArtists: 'Митці',
+    publicationTitle: 'Назва', type: 'Тип', publisher: 'Видавець', publicationDate: 'Дата публікації', isbn: 'ISBN', issn: 'ISSN',
+    created: '{{type}}: запис створено.', updated: '{{type}}: запис оновлено.', deleted: '{{type}}: запис видалено.', confirmDelete: 'Видалити {{type}} «{{title}}»? Цю дію неможливо скасувати.',
+    artist: 'Митець', work: 'Робота', publication: 'Публікація',
+  },
+} as const
+
 const resources = {
   en: { translation: {
+    admin: adminResources.en,
     common: { skip: 'Skip to content', home: 'Home', programmeName: 'Ukrainian Media Art Archive', placeholder: 'Placeholder', records: '{{count}} records', viewAll: 'View all', imagePlaceholder: 'Image placeholder', sorted: 'Sorted: Recent first', allArtworks: 'All artworks', recordStatus: 'Record status', placeholderContent: 'Placeholder content is marked as such.', language: 'Language', artworkBy: '{{title}} by {{artist}}', abstractPlaceholder: 'Abstract placeholder for {{title}}' },
     platform: { label: 'Art / Technology / Memory', statement: 'An independent platform for Ukrainian art, technology, archives, and research.', shortLabel: 'Independent cultural platform', development: 'Platform in development · 2026' },
     nav: { archive: 'Media Art Archive', artists: 'Artists', articles: 'Research', news: 'News', events: 'Programme', about: 'About', menu: 'Menu', close: 'Close', mainLabel: 'Main navigation', footerLabel: 'Footer navigation', preservation: '#preservation', research: '#research', collection: '#archives' },
@@ -18,6 +44,7 @@ const resources = {
     notFound: { eyebrow: '404 / Record not found', title: 'This page is not in the archive.', back: 'Return to the homepage' },
   } },
   uk: { translation: {
+    admin: adminResources.uk,
     common: { skip: 'Перейти до вмісту', home: 'Головна', programmeName: 'Український Медіа Арт Архів', placeholder: 'Макетний запис', records: '{{count}} записів', viewAll: 'Переглянути все', imagePlaceholder: 'Місце для зображення', sorted: 'Сортування: спочатку нові', allArtworks: 'Усі роботи', recordStatus: 'Статус запису', placeholderContent: 'Макетний вміст має відповідне позначення.', language: 'Мова', artworkBy: '{{title}}, автор: {{artist}}', abstractPlaceholder: 'Абстрактний макет для роботи «{{title}}»' },
     platform: { label: 'Мистецтво / Технології / Пам’ять', statement: 'Незалежна платформа українського мистецтва, технологій, архівів і досліджень.', shortLabel: 'Незалежна культурна платформа', development: 'Платформа у розробці · 2026' },
     nav: { archive: 'Медіа Арт Архів', artists: 'Митці', articles: 'Дослідження', news: 'Новини', events: 'Програма', about: 'Про платформу', menu: 'Меню', close: 'Закрити', mainLabel: 'Основна навігація', footerLabel: 'Навігація в підвалі', preservation: '#збереження', research: '#дослідження', collection: '#архіви' },

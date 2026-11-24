@@ -1,5 +1,7 @@
 # 004: Publication entity and endpoints
 
+Status: Implemented; live database verification pending
+
 ## Goal
 
 Represent books, catalogues, journals, magazine issues, and other publications.

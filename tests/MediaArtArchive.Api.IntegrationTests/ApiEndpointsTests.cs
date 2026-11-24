@@ -40,6 +40,35 @@ public sealed class ApiEndpointsTests(ApiWebApplicationFactory factory)
         Assert.True(paths.TryGetProperty("/api/v1", out _));
         Assert.True(paths.TryGetProperty("/health", out _));
         Assert.True(paths.TryGetProperty("/alive", out _));
+        Assert.True(paths.TryGetProperty("/api/v1/artists", out _));
+        Assert.True(paths.TryGetProperty("/api/v1/works", out _));
+        Assert.True(paths.TryGetProperty("/api/v1/publications", out _));
+        Assert.True(paths.TryGetProperty("/api/v1/auth/login/google", out _));
+    }
+
+    [Fact]
+    public async Task Signed_out_admin_session_returns_unauthorized()
+    {
+        var response = await _client.GetAsync("/api/v1/auth/me");
+
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task Signed_out_write_request_returns_unauthorized()
+    {
+        var response = await _client.PostAsJsonAsync("/api/v1/artists", new { displayName = "Test artist" });
+
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task Authenticated_write_without_antiforgery_token_is_rejected()
+    {
+        using var client = factory.CreateAuthenticatedClient();
+        var response = await client.PostAsJsonAsync("/api/v1/artists", new { displayName = "Test artist" });
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
 
     private sealed record ApiInformationResponse(string Name, string Version);

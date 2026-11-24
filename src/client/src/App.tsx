@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import { AppLayout } from './components/AppLayout'
 import { AboutPage } from './pages/AboutPage'
+import { AdminPage } from './pages/AdminPage'
 import { ArchivePage } from './pages/ArchivePage'
 import { ArticleDetailPage } from './pages/ArticleDetailPage'
 import { ArticlesPage } from './pages/ArticlesPage'
@@ -15,6 +16,7 @@ import { NotFoundPage } from './pages/NotFoundPage'
 export default function App() {
   return (
     <Routes>
+      <Route path="admin" element={<AdminPage />} />
       <Route element={<AppLayout />}>
         <Route index element={<HomePage />} />
         <Route path="archive" element={<ArchivePage />} />
