@@ -8,6 +8,8 @@ public sealed class NewsItem
     public string? TitleUk { get; set; }
     public required string Summary { get; set; }
     public string? SummaryUk { get; set; }
+    public string? ImageUrl { get; set; }
+    public string[] Tags { get; set; } = [];
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
     public DateTimeOffset UpdatedAt { get; set; } = DateTimeOffset.UtcNow;
 }

@@ -54,6 +54,8 @@ public static class NewsEndpoints
         EndpointValidation.Optional(errors, "titleUk", request.TitleUk, 500);
         EndpointValidation.Required(errors, "summary", request.Summary, 5_000);
         EndpointValidation.Optional(errors, "summaryUk", request.SummaryUk, 5_000);
+        EndpointValidation.ImageUrl(errors, request.ImageUrl);
+        EndpointValidation.Tags(errors, request.Tags);
         return errors;
     }
 
@@ -64,8 +66,11 @@ public static class NewsEndpoints
         item.TitleUk = EndpointValidation.Clean(request.TitleUk);
         item.Summary = request.Summary.Trim();
         item.SummaryUk = EndpointValidation.Clean(request.SummaryUk);
+        item.ImageUrl = EndpointValidation.Clean(request.ImageUrl);
+        item.Tags = EndpointValidation.Tags([], request.Tags);
         return item;
     }
 }
 
-public sealed record NewsRequest(DateOnly PublishedAt, string Title, string? TitleUk, string Summary, string? SummaryUk);
+public sealed record NewsRequest(DateOnly PublishedAt, string Title, string? TitleUk, string Summary, string? SummaryUk, string? ImageUrl,
+    IReadOnlyCollection<string>? Tags = null);

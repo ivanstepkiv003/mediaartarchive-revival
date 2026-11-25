@@ -58,6 +58,8 @@ public static class ArticleEndpoints
         EndpointValidation.Optional(errors, "categoryUk", request.CategoryUk, 120);
         EndpointValidation.Required(errors, "excerpt", request.Excerpt, 5_000);
         EndpointValidation.Optional(errors, "excerptUk", request.ExcerptUk, 5_000);
+        EndpointValidation.ImageUrl(errors, request.ImageUrl);
+        EndpointValidation.Tags(errors, request.Tags);
         return errors;
     }
 
@@ -72,9 +74,12 @@ public static class ArticleEndpoints
         item.CategoryUk = EndpointValidation.Clean(request.CategoryUk);
         item.Excerpt = request.Excerpt.Trim();
         item.ExcerptUk = EndpointValidation.Clean(request.ExcerptUk);
+        item.ImageUrl = EndpointValidation.Clean(request.ImageUrl);
+        item.Tags = EndpointValidation.Tags([], request.Tags);
         return item;
     }
 }
 
 public sealed record ArticleRequest(string Title, string? TitleUk, string Byline, string? BylineUk,
-    DateOnly PublishedAt, string Category, string? CategoryUk, string Excerpt, string? ExcerptUk);
+    DateOnly PublishedAt, string Category, string? CategoryUk, string Excerpt, string? ExcerptUk, string? ImageUrl,
+    IReadOnlyCollection<string>? Tags = null);

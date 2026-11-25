@@ -64,6 +64,7 @@ public static class PublicationEndpoints
         EndpointValidation.Optional(errors, "isbn", request.Isbn, 32);
         EndpointValidation.Optional(errors, "issn", request.Issn, 32);
         EndpointValidation.Optional(errors, "description", request.Description, 20_000);
+        EndpointValidation.Tags(errors, request.Tags);
         return errors;
     }
 
@@ -76,14 +77,17 @@ public static class PublicationEndpoints
         publication.Isbn = EndpointValidation.Clean(request.Isbn);
         publication.Issn = EndpointValidation.Clean(request.Issn);
         publication.Description = EndpointValidation.Clean(request.Description);
+        publication.Tags = EndpointValidation.Tags([], request.Tags);
         return publication;
     }
 
     private static PublicationResponse ToResponse(this Publication publication) => new(
         publication.Id, publication.Title, publication.Type, publication.Publisher,
-        publication.PublicationDate, publication.Isbn, publication.Issn, publication.Description,
+        publication.PublicationDate, publication.Isbn, publication.Issn, publication.Description, publication.Tags,
         publication.CreatedAt, publication.UpdatedAt);
 }
 
-public sealed record PublicationRequest(string Title, string Type, string? Publisher, DateOnly? PublicationDate, string? Isbn, string? Issn, string? Description);
-public sealed record PublicationResponse(Guid Id, string Title, string Type, string? Publisher, DateOnly? PublicationDate, string? Isbn, string? Issn, string? Description, DateTimeOffset CreatedAt, DateTimeOffset UpdatedAt);
+public sealed record PublicationRequest(string Title, string Type, string? Publisher, DateOnly? PublicationDate, string? Isbn, string? Issn, string? Description,
+    IReadOnlyCollection<string>? Tags = null);
+public sealed record PublicationResponse(Guid Id, string Title, string Type, string? Publisher, DateOnly? PublicationDate, string? Isbn, string? Issn,
+    string? Description, IReadOnlyCollection<string> Tags, DateTimeOffset CreatedAt, DateTimeOffset UpdatedAt);

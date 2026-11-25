@@ -13,6 +13,8 @@ public sealed class ArchiveEvent
     public required string Status { get; set; }
     public required string Description { get; set; }
     public string? DescriptionUk { get; set; }
+    public string? ImageUrl { get; set; }
+    public string[] Tags { get; set; } = [];
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
     public DateTimeOffset UpdatedAt { get; set; } = DateTimeOffset.UtcNow;
 }

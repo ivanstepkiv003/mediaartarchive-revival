@@ -16,6 +16,8 @@ public sealed class Work
     public string? ContextUk { get; set; }
     public string? Accent { get; set; }
     public bool Featured { get; set; }
+    public string? ImageUrl { get; set; }
+    public string[] Tags { get; set; } = [];
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
     public DateTimeOffset UpdatedAt { get; set; } = DateTimeOffset.UtcNow;
     public List<WorkArtist> Artists { get; set; } = [];

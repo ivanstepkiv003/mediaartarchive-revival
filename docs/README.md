@@ -9,6 +9,8 @@ platform and the revived Ukrainian Media Art Archive.
   startup instructions, and verification commands.
 - [Authentication and administration](admin.md) — Google OAuth, user sessions,
   administrator access, and local secret setup.
+- [Public interface design guidelines](design-guidelines.md) — the canonical
+  information-first visual direction and review checklist for frontend changes.
 - [Architecture](architecture.md) — the initial application shape and boundaries.
 - [Data model](data-model.md) — the proposed domain entities and relationships.
 - [Database decision](decisions/0001-primary-database.md) — PostgreSQL versus MongoDB.

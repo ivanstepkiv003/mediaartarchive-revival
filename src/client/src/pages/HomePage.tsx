@@ -5,19 +5,16 @@ import { EventCard } from '../components/EventCard'
 import { SectionHeader } from '../components/SectionHeader'
 import { useArchiveData } from '../services/archiveData'
 import { ArchiveDataState } from '../components/ArchiveDataState'
+import { LatestGrid } from '../components/LatestGrid'
 import { useTranslation } from 'react-i18next'
 
 export function HomePage() {
   const { t } = useTranslation()
-  const { artworks, artists, articles, events, news, loading, error } = useArchiveData()
+  const { artworks, artists, articles, events, news, latestItems, loading, error } = useArchiveData()
   if (loading || error) return <ArchiveDataState loading={loading} error={error} />
 
   return <>
-    <section className="home-hero container">
-      <div className="hero-index"><span>{t('home.index')}</span><span>{t('home.established')}</span></div>
-      <h1>{t('home.title1')}<br /><em>{t('home.title2')}</em><br />{t('home.title3')}</h1>
-      <div className="hero-intro"><p>{t('home.intro')}</p><Link className="circle-link" to="/archive" aria-label={t('home.explore')}><span>{t('home.explore')}</span><span aria-hidden="true">↘</span></Link></div>
-    </section>
+    <LatestGrid items={latestItems} />
 
     <section className="home-section container">
       <SectionHeader kicker={t('home.selected')} title={t('home.featured')} link="/archive" />

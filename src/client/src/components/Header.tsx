@@ -44,7 +44,7 @@ export function Header() {
       <div className="header-inner">
         <Link className="wordmark" to="/" aria-label={t('common.home')} onClick={() => setOpen(false)}>
           <span className="wordmark-mark" aria-hidden="true">{siteConfig.mark}</span>
-          <span>{t('platform.label')}</span>
+          <span>{t('common.programmeName')}</span>
         </Link>
         <div className="header-actions"><div className="desktop-nav">{nav}</div>{authError && <span className="auth-error" role="alert">{t('auth.loginError')}</span>}{account}<div className="language-switcher" aria-label={t('common.language')}><button className={language === 'uk' ? 'active' : ''} aria-pressed={language === 'uk'} onClick={() => changeLanguage('uk')} type="button">UA</button><span>/</span><button className={language === 'en' ? 'active' : ''} aria-pressed={language === 'en'} onClick={() => changeLanguage('en')} type="button">EN</button></div></div>
         <button className="menu-button" type="button" aria-expanded={open} aria-controls="mobile-menu" onClick={() => setOpen(!open)}>

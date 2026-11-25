@@ -34,6 +34,8 @@ public sealed class ArchiveDbContext(DbContextOptions<ArchiveDbContext> options)
             entity.Property(artist => artist.ActiveYears).HasMaxLength(120);
             entity.Property(artist => artist.ActiveYearsUk).HasMaxLength(120);
             entity.Property(artist => artist.Website).HasMaxLength(2_000);
+            entity.Property(artist => artist.ImageUrl).HasMaxLength(2_000);
+            entity.Property(artist => artist.Tags).HasColumnType("text[]");
             entity.HasIndex(artist => artist.SortName);
         });
 
@@ -53,6 +55,8 @@ public sealed class ArchiveDbContext(DbContextOptions<ArchiveDbContext> options)
             entity.Property(work => work.Context).HasMaxLength(2_000);
             entity.Property(work => work.ContextUk).HasMaxLength(2_000);
             entity.Property(work => work.Accent).HasMaxLength(20);
+            entity.Property(work => work.ImageUrl).HasMaxLength(2_000);
+            entity.Property(work => work.Tags).HasColumnType("text[]");
             entity.HasIndex(work => work.Title);
         });
 
@@ -77,6 +81,7 @@ public sealed class ArchiveDbContext(DbContextOptions<ArchiveDbContext> options)
             entity.Property(publication => publication.Isbn).HasMaxLength(32);
             entity.Property(publication => publication.Issn).HasMaxLength(32);
             entity.Property(publication => publication.Description).HasMaxLength(20_000);
+            entity.Property(publication => publication.Tags).HasColumnType("text[]");
             entity.HasIndex(publication => publication.Title);
             entity.HasIndex(publication => publication.Isbn).IsUnique();
             entity.HasIndex(publication => publication.Issn).IsUnique();
@@ -94,6 +99,8 @@ public sealed class ArchiveDbContext(DbContextOptions<ArchiveDbContext> options)
             entity.Property(article => article.CategoryUk).HasMaxLength(120);
             entity.Property(article => article.Excerpt).HasMaxLength(5_000).IsRequired();
             entity.Property(article => article.ExcerptUk).HasMaxLength(5_000);
+            entity.Property(article => article.ImageUrl).HasMaxLength(2_000);
+            entity.Property(article => article.Tags).HasColumnType("text[]");
             entity.HasIndex(article => article.PublishedAt);
         });
 
@@ -110,6 +117,8 @@ public sealed class ArchiveDbContext(DbContextOptions<ArchiveDbContext> options)
             entity.Property(item => item.Status).HasMaxLength(40).IsRequired();
             entity.Property(item => item.Description).HasMaxLength(5_000).IsRequired();
             entity.Property(item => item.DescriptionUk).HasMaxLength(5_000);
+            entity.Property(item => item.ImageUrl).HasMaxLength(2_000);
+            entity.Property(item => item.Tags).HasColumnType("text[]");
             entity.HasIndex(item => item.EventDate);
         });
 
@@ -121,6 +130,8 @@ public sealed class ArchiveDbContext(DbContextOptions<ArchiveDbContext> options)
             entity.Property(item => item.TitleUk).HasMaxLength(500);
             entity.Property(item => item.Summary).HasMaxLength(5_000).IsRequired();
             entity.Property(item => item.SummaryUk).HasMaxLength(5_000);
+            entity.Property(item => item.ImageUrl).HasMaxLength(2_000);
+            entity.Property(item => item.Tags).HasColumnType("text[]");
             entity.HasIndex(item => item.PublishedAt);
         });
 

@@ -10,7 +10,7 @@ the relevant backlog item before migrations are created.
 A person or collective responsible for one or more works.
 
 Initial fields: identifier, display name, sort name, biography, location,
-active years, website, and created/updated timestamps.
+active years, website, tags, and created/updated timestamps.
 
 ### Work
 
@@ -18,7 +18,7 @@ An artwork or other archived creative work. `Work` is the backend domain name
 for the frontend's current `Artwork` model.
 
 Initial fields: identifier, title, creation year or date, medium, description,
-city, context, and created/updated timestamps.
+city, context, tags, and created/updated timestamps.
 
 A work can have multiple artists and an artist can have multiple works. The
 relationship should therefore use an explicit `WorkArtist` join record, which
@@ -30,14 +30,15 @@ A publication or issue that groups editorial material, such as a book,
 catalogue, journal, or magazine issue.
 
 Initial fields: identifier, title, publication type, publisher, publication
-date, ISBN/ISSN when applicable, description, and created/updated timestamps.
+date, ISBN/ISSN when applicable, description, tags, and created/updated
+timestamps.
 
 ### Article
 
 An editorial text that can appear independently or within a publication.
 
 Initial fields: identifier, title, excerpt, body, publication date, category,
-language, publication identifier when applicable, and created/updated
+language, publication identifier when applicable, tags, and created/updated
 timestamps.
 
 Article authors should eventually be modeled as contributors rather than a
@@ -49,7 +50,10 @@ byline can be used in the first iteration.
 - `MediaAsset` for image, video, audio, and document metadata.
 - `Event` for exhibitions, screenings, talks, and other dated activities.
 - `NewsItem` for short platform announcements.
-- `Tag` for controlled or editorial classification across content types.
+- Tags are editorial classifications available on every content type. They are
+  currently stored as normalized PostgreSQL arrays; a controlled `Tag` entity
+  can replace them when shared vocabularies, aliases, or tag-level metadata are
+  required.
 - `Contributor` for authors, editors, translators, photographers, and similar roles.
 
 ## Relationships
@@ -59,7 +63,7 @@ Artist >---< Work
 Work   >---< MediaAsset
 Publication 1---* Article
 Article >---< Contributor
-Work/Article/Publication >---< Tag
+Artist/Work/Publication/Article/Event/News --- tags
 ```
 
 Translations should not be hidden in unstructured documents. Once content

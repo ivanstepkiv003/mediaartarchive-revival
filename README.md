@@ -18,6 +18,8 @@ tests/      API unit and integration tests
 
 Project documentation starts at [`docs/README.md`](docs/README.md). The ordered
 implementation backlog is maintained in [`docs/backlog/README.md`](docs/backlog/README.md).
+Public frontend changes must follow the canonical
+[design guidelines](docs/design-guidelines.md).
 
 ## Local development
 
@@ -45,4 +47,7 @@ npm install
 npm run dev
 ```
 
-The current application uses clearly labelled representative mock records. Its data service boundary is ready to be replaced with calls to the future API. The interface supports Ukrainian and English through `i18next`; the selected language is persisted in the browser.
+The current application stores its clearly labelled representative records in
+PostgreSQL and serves them through the API to both the public interface and the
+administration area. The interface supports Ukrainian and English through
+`i18next`; the selected language is persisted in the browser.

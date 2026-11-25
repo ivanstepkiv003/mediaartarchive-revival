@@ -89,3 +89,14 @@ reused by display name to avoid duplicates.
 
 Production environments should omit `Database:SeedMockData` or set it to
 `false` unless placeholder content is explicitly required.
+
+Use the optional **Image URL** field on an artist, work, article, event, or news
+record to connect a publicly viewable image. Paste a direct image URL (prefer
+HTTPS) and save the record. Leave the field empty to use the schematic preview
+in the home page grid.
+
+Every content record, including publications, has an optional **Tags** field.
+Enter tags separated by commas, without needing to type `#`. The API trims
+values, removes an optional leading `#`, and ignores case-insensitive
+duplicates. A record supports up to 24 tags, with at most 80 characters per
+tag.

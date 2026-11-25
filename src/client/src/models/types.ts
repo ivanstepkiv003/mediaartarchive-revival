@@ -10,6 +10,8 @@ export type Artwork = {
   description: string
   accent: string
   featured?: boolean
+  imageUrl?: string
+  tags?: string[]
 }
 
 export type Artist = {
@@ -19,6 +21,8 @@ export type Artist = {
   activeYears: string
   bio: string
   initials: string
+  imageUrl?: string
+  tags?: string[]
 }
 
 export type Article = {
@@ -28,6 +32,8 @@ export type Article = {
   publishedAt: string
   excerpt: string
   category: string
+  imageUrl?: string
+  tags?: string[]
 }
 
 export type ArchiveEvent = {
@@ -38,6 +44,8 @@ export type ArchiveEvent = {
   venue: string
   description: string
   status: 'Upcoming' | 'Past'
+  imageUrl?: string
+  tags?: string[]
 }
 
 export type NewsItem = {
@@ -45,4 +53,6 @@ export type NewsItem = {
   date: string
   title: string
   summary: string
+  imageUrl?: string
+  tags?: string[]
 }

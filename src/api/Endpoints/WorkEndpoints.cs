@@ -13,7 +13,7 @@ public static class WorkEndpoints
         works.MapGet("/", async (ArchiveDbContext db, CancellationToken ct) =>
             await db.Works.AsNoTracking().OrderBy(x => x.Title).Select(x => new WorkResponse(
                 x.Id, x.Title, x.TitleUk, x.CreationDate, x.Medium, x.MediumUk, x.Description, x.DescriptionUk,
-                x.City, x.CityUk, x.Context, x.ContextUk, x.Accent, x.Featured,
+                x.City, x.CityUk, x.Context, x.ContextUk, x.Accent, x.Featured, x.ImageUrl, x.Tags,
                 x.Artists.OrderBy(a => a.SortOrder).Select(a => new WorkArtistResponse(a.ArtistId, a.Artist.DisplayName, a.Artist.DisplayNameUk, a.Role, a.SortOrder)).ToList(),
                 x.CreatedAt, x.UpdatedAt)).ToListAsync(ct));
 
@@ -73,6 +73,8 @@ public static class WorkEndpoints
         EndpointValidation.Optional(errors, "context", request.Context, 2_000);
         EndpointValidation.Optional(errors, "contextUk", request.ContextUk, 2_000);
         EndpointValidation.Optional(errors, "accent", request.Accent, 20);
+        EndpointValidation.ImageUrl(errors, request.ImageUrl);
+        EndpointValidation.Tags(errors, request.Tags);
         var artistIds = request.ArtistIds?.Distinct().ToArray() ?? [];
         if (artistIds.Length == 0) errors["artistIds"] = ["At least one artist is required."];
         else if (await db.Artists.CountAsync(x => artistIds.Contains(x.Id), ct) != artistIds.Length)
@@ -95,6 +97,8 @@ public static class WorkEndpoints
         work.ContextUk = EndpointValidation.Clean(request.ContextUk);
         work.Accent = EndpointValidation.Clean(request.Accent);
         work.Featured = request.Featured;
+        work.ImageUrl = EndpointValidation.Clean(request.ImageUrl);
+        work.Tags = EndpointValidation.Tags([], request.Tags);
         return work;
     }
 
@@ -114,15 +118,15 @@ public static class WorkEndpoints
     private static Task<WorkResponse?> FindResponse(ArchiveDbContext db, Guid id, CancellationToken ct) =>
         db.Works.AsNoTracking().Where(x => x.Id == id).Select(x => new WorkResponse(
             x.Id, x.Title, x.TitleUk, x.CreationDate, x.Medium, x.MediumUk, x.Description, x.DescriptionUk,
-            x.City, x.CityUk, x.Context, x.ContextUk, x.Accent, x.Featured,
+            x.City, x.CityUk, x.Context, x.ContextUk, x.Accent, x.Featured, x.ImageUrl, x.Tags,
             x.Artists.OrderBy(a => a.SortOrder).Select(a => new WorkArtistResponse(a.ArtistId, a.Artist.DisplayName, a.Artist.DisplayNameUk, a.Role, a.SortOrder)).ToList(),
             x.CreatedAt, x.UpdatedAt)).SingleOrDefaultAsync(ct);
 }
 
 public sealed record WorkRequest(string Title, string? TitleUk, string? CreationDate, string? Medium, string? MediumUk,
     string? Description, string? DescriptionUk, string? City, string? CityUk, string? Context, string? ContextUk,
-    string? Accent, bool Featured, IReadOnlyCollection<Guid>? ArtistIds);
+    string? Accent, bool Featured, string? ImageUrl, IReadOnlyCollection<Guid>? ArtistIds, IReadOnlyCollection<string>? Tags = null);
 public sealed record WorkArtistResponse(Guid ArtistId, string DisplayName, string? DisplayNameUk, string? Role, int SortOrder);
 public sealed record WorkResponse(Guid Id, string Title, string? TitleUk, string? CreationDate, string? Medium, string? MediumUk,
     string? Description, string? DescriptionUk, string? City, string? CityUk, string? Context, string? ContextUk,
-    string? Accent, bool Featured, IReadOnlyCollection<WorkArtistResponse> Artists, DateTimeOffset CreatedAt, DateTimeOffset UpdatedAt);
+    string? Accent, bool Featured, string? ImageUrl, IReadOnlyCollection<string> Tags, IReadOnlyCollection<WorkArtistResponse> Artists, DateTimeOffset CreatedAt, DateTimeOffset UpdatedAt);

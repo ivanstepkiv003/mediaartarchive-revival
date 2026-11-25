@@ -73,6 +73,8 @@ public static class ArtistEndpoints
         EndpointValidation.Optional(errors, "activeYears", request.ActiveYears, 120);
         EndpointValidation.Optional(errors, "activeYearsUk", request.ActiveYearsUk, 120);
         EndpointValidation.Optional(errors, "website", request.Website, 2_000);
+        EndpointValidation.ImageUrl(errors, request.ImageUrl);
+        EndpointValidation.Tags(errors, request.Tags);
         return errors;
     }
 
@@ -89,18 +91,20 @@ public static class ArtistEndpoints
         artist.ActiveYears = EndpointValidation.Clean(request.ActiveYears);
         artist.ActiveYearsUk = EndpointValidation.Clean(request.ActiveYearsUk);
         artist.Website = EndpointValidation.Clean(request.Website);
+        artist.ImageUrl = EndpointValidation.Clean(request.ImageUrl);
+        artist.Tags = EndpointValidation.Tags([], request.Tags);
         return artist;
     }
 
     private static ArtistResponse ToResponse(this Artist artist) => new(
         artist.Id, artist.DisplayName, artist.DisplayNameUk, artist.SortName, artist.SortNameUk,
         artist.Biography, artist.BiographyUk, artist.Location, artist.LocationUk,
-        artist.ActiveYears, artist.ActiveYearsUk, artist.Website, artist.CreatedAt, artist.UpdatedAt);
+        artist.ActiveYears, artist.ActiveYearsUk, artist.Website, artist.ImageUrl, artist.Tags, artist.CreatedAt, artist.UpdatedAt);
 }
 
 public sealed record ArtistRequest(string DisplayName, string? DisplayNameUk, string? SortName, string? SortNameUk,
     string? Biography, string? BiographyUk, string? Location, string? LocationUk,
-    string? ActiveYears, string? ActiveYearsUk, string? Website);
+    string? ActiveYears, string? ActiveYearsUk, string? Website, string? ImageUrl, IReadOnlyCollection<string>? Tags = null);
 public sealed record ArtistResponse(Guid Id, string DisplayName, string? DisplayNameUk, string? SortName, string? SortNameUk,
     string? Biography, string? BiographyUk, string? Location, string? LocationUk,
-    string? ActiveYears, string? ActiveYearsUk, string? Website, DateTimeOffset CreatedAt, DateTimeOffset UpdatedAt);
+    string? ActiveYears, string? ActiveYearsUk, string? Website, string? ImageUrl, IReadOnlyCollection<string> Tags, DateTimeOffset CreatedAt, DateTimeOffset UpdatedAt);

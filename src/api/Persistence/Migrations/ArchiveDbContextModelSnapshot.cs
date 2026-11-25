@@ -44,6 +44,10 @@ namespace MediaArtArchive.Api.Persistence.Migrations
                     b.Property<DateOnly>("EventDate")
                         .HasColumnType("date");
 
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasMaxLength(240)
@@ -57,6 +61,10 @@ namespace MediaArtArchive.Api.Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("character varying(40)");
+
+                    b.PrimitiveCollection<string[]>("Tags")
+                        .IsRequired()
+                        .HasColumnType("text[]");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -122,8 +130,16 @@ namespace MediaArtArchive.Api.Persistence.Migrations
                         .HasMaxLength(5000)
                         .HasColumnType("character varying(5000)");
 
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
                     b.Property<DateOnly>("PublishedAt")
                         .HasColumnType("date");
+
+                    b.PrimitiveCollection<string[]>("Tags")
+                        .IsRequired()
+                        .HasColumnType("text[]");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -178,6 +194,10 @@ namespace MediaArtArchive.Api.Persistence.Migrations
                         .HasMaxLength(240)
                         .HasColumnType("character varying(240)");
 
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
                     b.Property<string>("Location")
                         .HasMaxLength(240)
                         .HasColumnType("character varying(240)");
@@ -193,6 +213,10 @@ namespace MediaArtArchive.Api.Persistence.Migrations
                     b.Property<string>("SortNameUk")
                         .HasMaxLength(240)
                         .HasColumnType("character varying(240)");
+
+                    b.PrimitiveCollection<string[]>("Tags")
+                        .IsRequired()
+                        .HasColumnType("text[]");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -231,6 +255,10 @@ namespace MediaArtArchive.Api.Persistence.Migrations
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
                     b.Property<DateOnly>("PublishedAt")
                         .HasColumnType("date");
 
@@ -242,6 +270,10 @@ namespace MediaArtArchive.Api.Persistence.Migrations
                     b.Property<string>("SummaryUk")
                         .HasMaxLength(5000)
                         .HasColumnType("character varying(5000)");
+
+                    b.PrimitiveCollection<string[]>("Tags")
+                        .IsRequired()
+                        .HasColumnType("text[]");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -289,6 +321,10 @@ namespace MediaArtArchive.Api.Persistence.Migrations
                     b.Property<string>("Publisher")
                         .HasMaxLength(240)
                         .HasColumnType("character varying(240)");
+
+                    b.PrimitiveCollection<string[]>("Tags")
+                        .IsRequired()
+                        .HasColumnType("text[]");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -360,6 +396,10 @@ namespace MediaArtArchive.Api.Persistence.Migrations
                     b.Property<bool>("Featured")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
                     b.Property<string>("Medium")
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
@@ -367,6 +407,10 @@ namespace MediaArtArchive.Api.Persistence.Migrations
                     b.Property<string>("MediumUk")
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
+
+                    b.PrimitiveCollection<string[]>("Tags")
+                        .IsRequired()
+                        .HasColumnType("text[]");
 
                     b.Property<string>("Title")
                         .IsRequired()

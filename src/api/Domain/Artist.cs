@@ -14,6 +14,8 @@ public sealed class Artist
     public string? ActiveYears { get; set; }
     public string? ActiveYearsUk { get; set; }
     public string? Website { get; set; }
+    public string? ImageUrl { get; set; }
+    public string[] Tags { get; set; } = [];
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
     public DateTimeOffset UpdatedAt { get; set; } = DateTimeOffset.UtcNow;
     public List<WorkArtist> Works { get; set; } = [];

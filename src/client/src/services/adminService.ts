@@ -1,11 +1,12 @@
 import { apiRequest, authenticatedMutation } from './authService'
 
-export type ArtistAdmin = { id: string; displayName: string; displayNameUk?: string; sortName?: string; sortNameUk?: string; biography?: string; biographyUk?: string; location?: string; locationUk?: string; activeYears?: string; activeYearsUk?: string; website?: string }
-export type WorkAdmin = { id: string; title: string; titleUk?: string; creationDate?: string; medium?: string; mediumUk?: string; description?: string; descriptionUk?: string; city?: string; cityUk?: string; context?: string; contextUk?: string; accent?: string; featured: boolean; artists: { artistId: string; displayName: string; displayNameUk?: string }[] }
-export type PublicationAdmin = { id: string; title: string; type: string; publisher?: string; publicationDate?: string; isbn?: string; issn?: string; description?: string }
-export type ArticleAdmin = { id: string; title: string; titleUk?: string; byline: string; bylineUk?: string; publishedAt: string; category: string; categoryUk?: string; excerpt: string; excerptUk?: string }
-export type EventAdmin = { id: string; title: string; titleUk?: string; eventDate: string; location: string; locationUk?: string; venue: string; venueUk?: string; status: 'Upcoming' | 'Past'; description: string; descriptionUk?: string }
-export type NewsAdmin = { id: string; publishedAt: string; title: string; titleUk?: string; summary: string; summaryUk?: string }
+type AuditFields = { createdAt?: string; updatedAt?: string }
+export type ArtistAdmin = AuditFields & { id: string; displayName: string; displayNameUk?: string; sortName?: string; sortNameUk?: string; biography?: string; biographyUk?: string; location?: string; locationUk?: string; activeYears?: string; activeYearsUk?: string; website?: string; imageUrl?: string; tags: string[] }
+export type WorkAdmin = AuditFields & { id: string; title: string; titleUk?: string; creationDate?: string; medium?: string; mediumUk?: string; description?: string; descriptionUk?: string; city?: string; cityUk?: string; context?: string; contextUk?: string; accent?: string; featured: boolean; imageUrl?: string; tags: string[]; artists: { artistId: string; displayName: string; displayNameUk?: string }[] }
+export type PublicationAdmin = { id: string; title: string; type: string; publisher?: string; publicationDate?: string; isbn?: string; issn?: string; description?: string; tags: string[] }
+export type ArticleAdmin = AuditFields & { id: string; title: string; titleUk?: string; byline: string; bylineUk?: string; publishedAt: string; category: string; categoryUk?: string; excerpt: string; excerptUk?: string; imageUrl?: string; tags: string[] }
+export type EventAdmin = AuditFields & { id: string; title: string; titleUk?: string; eventDate: string; location: string; locationUk?: string; venue: string; venueUk?: string; status: 'Upcoming' | 'Past'; description: string; descriptionUk?: string; imageUrl?: string; tags: string[] }
+export type NewsAdmin = AuditFields & { id: string; publishedAt: string; title: string; titleUk?: string; summary: string; summaryUk?: string; imageUrl?: string; tags: string[] }
 
 export const adminService = {
   artists: () => apiRequest<ArtistAdmin[]>('/artists'),

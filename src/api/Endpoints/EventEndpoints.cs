@@ -58,6 +58,8 @@ public static class EventEndpoints
         EndpointValidation.Optional(errors, "venueUk", request.VenueUk, 500);
         EndpointValidation.Required(errors, "description", request.Description, 5_000);
         EndpointValidation.Optional(errors, "descriptionUk", request.DescriptionUk, 5_000);
+        EndpointValidation.ImageUrl(errors, request.ImageUrl);
+        EndpointValidation.Tags(errors, request.Tags);
         if (request.Status is not ("Upcoming" or "Past")) errors["status"] = ["Status must be Upcoming or Past."];
         return errors;
     }
@@ -74,9 +76,12 @@ public static class EventEndpoints
         item.Status = request.Status;
         item.Description = request.Description.Trim();
         item.DescriptionUk = EndpointValidation.Clean(request.DescriptionUk);
+        item.ImageUrl = EndpointValidation.Clean(request.ImageUrl);
+        item.Tags = EndpointValidation.Tags([], request.Tags);
         return item;
     }
 }
 
 public sealed record EventRequest(string Title, string? TitleUk, DateOnly EventDate, string Location,
-    string? LocationUk, string Venue, string? VenueUk, string Status, string Description, string? DescriptionUk);
+    string? LocationUk, string Venue, string? VenueUk, string Status, string Description, string? DescriptionUk, string? ImageUrl,
+    IReadOnlyCollection<string>? Tags = null);
